@@ -1,0 +1,215 @@
+/* Inspirert av teenage engineering-estetikken */
+:root {
+    --bg-color: #f4f4f4; /* Lys grå tone */
+    --text-color: #000;
+    --accent-color: #ff3e00; /* Oransje-rød aksent */
+    --border-style: 1px solid #d1d1d1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    overflow-x: hidden;
+}
+
+p {
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.fullscreen-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; 
+    overflow: hidden;
+    background-color: #fff;
+    border-bottom: var(--border-style);
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    z-index: 100;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 20px;
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    z-index: 10;
+}
+
+.image-text-top {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    z-index: 10;
+}
+
+.content-section {
+    background-color: var(--bg-color);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background-color: #d1d1d1;
+}
+
+.card {
+    background-color: var(--bg-color);
+    padding: 40px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card.wide {
+    grid-column: span 2;
+}
+
+.full-screen-image-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; 
+    overflow: hidden;
+    border-top: var(--border-style);
+    border-bottom: var(--border-style);
+}
+
+.full-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center center;
+}
+
+h1 {
+    font-size: 2.5rem; 
+    font-weight: 900;
+    line-height: 0.9;
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 0.9;
+    margin: 20px 0;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.label {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 12px; 
+}
+
+footer {
+    padding: 20px;
+    font-size: 10px;
+    color: #666;
+    background-color: var(--bg-color);
+}
+
+/* === SCROLL-VIDEO STYLING === */
+.video-scroll-section {
+    position: relative;
+    height: 300vh; /* Tilpass dette tallet for å endre scroll-hastigheten */
+    background-color: var(--bg-color);
+}
+
+.sticky-video-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#scroll-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center center;
+}
+
+/* Tekst over videoen (høyre side, midtsentrert) */
+.video-overlay-text {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+    z-index: 10;
+    text-align: right; 
+    opacity: 0; /* Starter usynlig */
+    transition: opacity 0.5s ease-in-out; /* Myk innfading */
+}
+
+.video-overlay-text.fade-in {
+    opacity: 1; /* Blir synlig når klassen legges til via JS */
+}
+
+/* Responsivitet for mobil */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 20px;
+    }
+    .hero-text {
+        bottom: 20px;
+        left: 20px;
+    }
+    .image-text-top {
+        top: 20px;
+        left: 20px;
+    }
+    h1 { font-size: 1.8rem; } 
+    h2 { font-size: 2rem; }
+    p { font-size: 20px; } 
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+    .card.wide {
+        grid-column: span 1;
+    }
+    .full-screen-image-section {
+        height: 70vh; 
+    }
+    .video-overlay-text {
+        right: 20px; /* Mindre marg på mobil */
+    }
+}
