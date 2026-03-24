@@ -1,43 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const video = document.getElementById("scroll-video");
-    const section = document.querySelector(".video-scroll-section");
-    const videoText = document.getElementById("video-text");
+    
+    const setupVideoScroll = (sectionSelector, videoId, textId) => {
+        const section = document.querySelector(sectionSelector);
+        const video = document.getElementById(videoId);
+        const videoText = textId ? document.getElementById(textId) : null;
 
-    // Lytter etter scroll-hendelser
-    window.addEventListener("scroll", () => {
-        // Sikrer at videoen har lastet inn metadata
-        if (isNaN(video.duration)) return;
+        if (!section || !video) return;
 
-        const rect = section.getBoundingClientRect();
-        const scrollPosition = -rect.top;
-        const scrollableDistance = rect.height - window.innerHeight;
+        window.addEventListener("scroll", () => {
+            if (isNaN(video.duration)) return;
 
-        // Sjekk om vi befinner oss inne i seksjonen
-        if (scrollPosition >= 0 && scrollPosition <= scrollableDistance) {
-            const scrollFraction = scrollPosition / scrollableDistance;
-            
-            // Oppdater videoens tid
-            window.requestAnimationFrame(() => {
-                video.currentTime = video.duration * scrollFraction;
-            });
+            const rect = section.getBoundingClientRect();
+            const scrollPosition = -rect.top;
+            const scrollableDistance = rect.height - window.innerHeight;
 
-            // Teksten fader inn når man har scrollet ned mer enn 5%
-            if (scrollFraction > 0.05) {
-                videoText.classList.add("fade-in");
-            } else {
-                videoText.classList.remove("fade-in");
+            if (scrollPosition >= 0 && scrollPosition <= scrollableDistance) {
+                const scrollFraction = scrollPosition / scrollableDistance;
+                
+                window.requestAnimationFrame(() => {
+                    video.currentTime = video.duration * scrollFraction;
+                });
+
+                if (videoText) {
+                    scrollFraction > 0.05 ? videoText.classList.add("fade-in") : videoText.classList.remove("fade-in");
+                }
+            } 
+            else if (scrollPosition < 0) {
+                video.currentTime = 0;
+            } 
+            else if (scrollPosition > scrollableDistance) {
+                video.currentTime = video.duration;
             }
+        });
+    };
 
-        } 
-        // Lås til start hvis vi er ovenfor seksjonen
-        else if (scrollPosition < 0) {
-            video.currentTime = 0;
-            videoText.classList.remove("fade-in");
-        } 
-        // Lås til slutt hvis vi er forbi seksjonen
-        else if (scrollPosition > scrollableDistance) {
-            video.currentTime = video.duration;
-            videoText.classList.add("fade-in");
-        }
-    });
+    // Aktiver for den første videoen
+    setupVideoScroll(".video-scroll-section:not(.narrow-video)", "scroll-video", "video-text");
+
+    // Aktiver for den nye, smale videoen
+    setupVideoScroll(".narrow-video", "scroll-video-2", null);
 });
